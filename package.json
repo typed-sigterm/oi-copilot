@@ -1,0 +1,90 @@
+{
+  "publisher": "typed-sigterm",
+  "name": "oi-copilot",
+  "displayName": "OI Copilot",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.20.0+sha512.cf9998222162dd85864d0a8102e7892e7ba4ceadebbf5a31f9c2fce48dfce317a9c53b9f6464d1ef9042cba2e02ae02a9f7c143a2b438cd93c91840f0192b9dd",
+  "description": "Optimize GitHub Copilot for competitive programming.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/typed-sigterm/oi-copilot"
+  },
+  "categories": [
+    "AI",
+    "Education"
+  ],
+  "main": "dist/index.js",
+  "icon": "./assets/logo.png",
+  "engines": {
+    "node": "22",
+    "vscode": "^1.100.0"
+  },
+  "activationEvents": [
+    "onLanguageModelTool:oi-copilot_getOJProblem"
+  ],
+  "contributes": {
+    "languageModelTools": [
+      {
+        "name": "oi-copilot_getOJProblem",
+        "displayName": "Get OJ Problem",
+        "modelDescription": "Fetch problem information from Online Judge platforms with given platform and problem ID.",
+        "canBeReferencedInPrompt": true,
+        "toolReferenceName": "getOJProblem",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "platform": {
+              "type": "string",
+              "enum": [
+                "luogu",
+                "codeforces",
+                "atcoder",
+                "leetcode",
+                "hydro",
+                "lyrio",
+                "mxoj"
+              ],
+              "description": "The OJ platform to fetch from"
+            },
+            "problemId": {
+              "type": "string",
+              "description": "The problem ID on the platform (e.g., 'B2001' for Luogu, '1A' for Codeforces)"
+            }
+          },
+          "required": [
+            "platform",
+            "problemId"
+          ]
+        }
+      }
+    ]
+  },
+  "extensionDependencies": [
+    "GitHub.copilot-chat"
+  ],
+  "scripts": {
+    "dev": "tsdown -w",
+    "build": "tsdown",
+    "lint": "eslint .",
+    "pack": "vsce package --no-dependencies -o extension.vsix",
+    "preview": "vite preview",
+    "type-check": "tsc"
+  },
+  "dependencies": {
+    "pretty-bytes": "^7.1.0",
+    "un-oj": "^0.3.2"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^6.1.0",
+    "@tsconfig/node22": "^22.0.2",
+    "@typed-sigterm/eslint-config": "^1.6.0",
+    "@types/vscode": "1.100.0",
+    "@vscode/vsce": "^3.6.2",
+    "eslint": "^9.38.0",
+    "tsdown": "^0.15.11",
+    "typescript": "^5.9.3"
+  }
+}
